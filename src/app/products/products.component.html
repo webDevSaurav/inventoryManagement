@@ -1,0 +1,27 @@
+<div class="container products">
+
+  <div class="row">
+    <div class="col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a *ngFor="let category of categories" class="nav-link" id="v-pills-{{category.name}}-tab" data-toggle="pill" href="#v-pills-{{category.name | removeSpace}}" role="tab" attr.aria-controls="v-pills-{{category.name | removeSpace}}" aria-selected="false" (click)="getProductsAccordingToCategories(category)">{{category.name}}</a>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div *ngFor="let category of categories" class="tab-pane fade" id="v-pills-{{category.name | removeSpace}}" role="tabpanel" attr.aria-labelledby="v-pills-{{category.name | removeSpace}}-tab">
+            <ul class="nav nav-tabs" id="myTab-{{category.id}}" role="tablist">
+                <li class="nav-item" *ngFor = "let brand of selectedBrands">
+                  <a class="nav-link" id="{{brand | removeSpace}}-tab-{{category.id}}" data-toggle="tab" href="#{{brand | removeSpace}}-{{category.id}}" role="tab" attr.aria-controls="{{brand | removeSpace}}-{{category.id}}" aria-selected="true" (click) = "getProductsofBrandAndCategory(brand)" >{{brand}}</a>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div *ngFor = "let brand of selectedBrands" class="tab-pane fade" id="{{brand | removeSpace}}-{{category.id}}" role="tabpanel" attr.aria-labelledby="{{brand | removeSpace}}-tab-{{category.id}}">
+                  <p *ngFor="let product of selectedProductsofBrandAndCategory">{{product.name}} - {{product.brand.name}} - {{product.category.name}}</p>
+                </div>
+              </div>
+              <!-- <p *ngFor="let product of selectedProducts">{{product.name}}-{{product.category.name}}</p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
