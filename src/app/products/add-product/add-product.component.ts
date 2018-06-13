@@ -5,6 +5,7 @@ import { CategoriesService } from '../../categories.service';
 import { Brand } from '../../brand.modal';
 import { Category } from '../../categories.modal';
 import { Product } from '../../product.modal';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-product',
@@ -59,28 +60,23 @@ export class AddProductComponent implements OnInit {
     }
   }
 
-  onSubmit(){
+  onSubmit(form : NgForm){
     if(this.addNewCategory){
-      const category = {id : String(Math.floor(Math.random() * 10000)), name : this.newCategory}
+      const category = {id : String(Math.floor(Math.random() * 10000)), name : form.value.newCategory}
       this.category = category
       this.categoryService.addCategory(category)
     }
     if(this.addNewBrand){
-      const brand = {id : String(Math.floor(Math.random() * 10000)), name : this.newBrand}
+      const brand = {id : String(Math.floor(Math.random() * 10000)), name : form.value.newBrand}
       this.brand = brand
       this.brandService.addBrand(brand)
     }
-    const product = { id : String(Math.floor(Math.random() * 10000)), name :  this.name, createdOn :  new Date(), quantity :  this.quantity, category : this.category, brand : this.brand}
+    const product = { id : String(Math.floor(Math.random() * 10000)), name :  form.value.name, createdOn :  new Date(), quantity :  form.value.quantity, category : this.category, brand : this.brand}
     this.productsService.addProduct(product)
 
-    this.name = ""
-    this.quantity = 1
-    this.category = null
-    this.brand = null
-    this.newCategory = ""
-    this.newBrand = ""
-    this.addNewBrand = false
+    form.reset()
     this.addNewCategory = false
+    this.addNewBrand = false
   }
 
   getStringifiedObj(obj){
